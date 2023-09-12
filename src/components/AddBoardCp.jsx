@@ -50,7 +50,8 @@ const AddBoardCp = () => {
     }
 
     try {
-      await mutationAdd.mutateAsync({
+      // TODO: mutateAsync 는 Promise를 리턴받아서 직접 에러처리를 하고 싶은 특수한 경우에만 사용하고 mutate를 사용하세요.
+      mutationAdd.mutate({
         userId: user.uid, // 사용자 ID 추가
         userEmail: user.email,
         title,
@@ -84,8 +85,15 @@ const AddBoardCp = () => {
   const handleChange = (e) => {
     console.log(e.target.files[0])
     e.preventDefault()
-    const file = e.target.files
+    const file = e.target.files[0]
     if (!file) return null
+    // TODO: e.target.files[0] 을 콘솔찍어보시고 type과 size에 따라 유효성검사하는 부분이 있으면 좋습니다.
+    if (file.size / (1024 * 1024) > 20) {
+      alert('이미지는 최대 20MB까지만 허용합니다.')
+    }
+    if (!file.type.startsWith('image/')) {
+      alert('이미지만 올려!')
+    }
 
     const storageRef = ref(storage, `files/${file[0].name}`)
     const uploadTask = uploadBytes(storageRef, file[0])
@@ -131,11 +139,10 @@ const AddBoardCp = () => {
 
               <ButtonsBox>
                 <div>
-                  <CustomFileInput ref={fileInput} type="file" onChange={handleChange} />
+                  {/* TODO: input에 ref를 두기보다는 id만 두고, label에 onClick 함수는 필요 없습니다. */}
+                  <CustomFileInput id="fileInput" type="file" onChange={handleChange} />
                   <span>{fileName}</span>
-                  <CustomFileInputLabel htmlFor="fileInput" onClick={handleUploadClick}>
-                    이미지 업로드
-                  </CustomFileInputLabel>
+                  <CustomFileInputLabel htmlFor="fileInput">이미지 업로드</CustomFileInputLabel>
                 </div>
                 <div>
                   <CancelAndAddBox>

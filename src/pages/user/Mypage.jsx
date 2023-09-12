@@ -13,7 +13,7 @@ function Mypage() {
   const [isLoading, setIsLoading] = useState(true)
 
   // 부모 컴포넌트에서 유저 정보 가져오기
-  const localUser = JSON.parse(localStorage.getItem('user'))
+  // const localUser = JSON.parse(localStorage.getItem('user'))
 
   const navigator = useNavigate()
 
@@ -26,13 +26,15 @@ function Mypage() {
   }
   const photoURL = user ? user.photoURL : null
   // 이메일에서 id값만 불러오기
-  const localUserid = JSON.parse(localStorage.getItem('user'))
 
-  const email = localUserid?.email
+  // TODO: 16번 줄에서 이미 localUser 선언했는데 이건 왜 쓰신건가요?
+  const localUser = JSON.parse(localStorage.getItem('user'))
+
+  const email = localUser?.email
   const localStorageUserId = email.split('@')[0]
 
   // 프로필 불러오기 값만 불러오기
-  const photoImg = localUserid?.photoURL
+  const photoImg = localUser?.photoURL
 
   useEffect(() => {
     // 사용자 정보 가져오기

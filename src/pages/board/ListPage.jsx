@@ -21,7 +21,8 @@ function ListPage() {
   const [activeSort, setActiveSort] = useState('latest')
 
   // 검색기능
-  const [searchTerm, setSearchTerm] = useState(listsData)
+  // TODO: 검색기능은 아직 진행중인가요?
+  // const [searchTerm, setSearchTerm] = useState(listsData)
 
   // state 하나로 관리
   const [displayData, setDisplayData] = useState([])
@@ -41,7 +42,7 @@ function ListPage() {
   }
 
   const handleSearchClick = (value) => {
-    setSearchTerm(value)
+    // setSearchTerm(value)
     searchFiltered(value)
   }
 

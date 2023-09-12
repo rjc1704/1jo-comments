@@ -19,6 +19,8 @@ interface Reply {
 
 function Main() {
   const [images, setImages] = useState<Images[]>([])
+
+  // TODO: no dependency useEffect가 2개 있네요. 하나로 변경하시고 api함수들은 api 폴더로 정리하고 import해서 사용해보세요.
   useEffect(() => {
     // 'lists' 컬렉션에서 칭찬순으로 상위 10개의 데이터 가져오기
     const fetchData = async () => {
@@ -51,6 +53,7 @@ function Main() {
           collection(db, 'reply'), // 'reply' 컬렉션을 대상으로 쿼리 설정
           orderBy('userEmail'), // 'userEmail' 필드를 기준으로 정렬
           limit(50), // TOP 10개의 문서만 가져오기
+          // TODO: top 10개 라고 했는데 왜 50개를 가져오나요?
         )
 
         const querySnapshot = await getDocs(q)
@@ -76,6 +79,7 @@ function Main() {
         await Promise.all(
           sortedUserEmails.slice(0, 10).map(async (topUserEmail) => {
             // 각각의 가장 갯수가 많은 userEmail에 해당하는 문서 가져오기
+            // TODO: top user의 이미지가 필요한건데 reply 데이터를 다 불러올 필요가 있나요?
             const userDataQuerySnapshot = await getDocs(query(collection(db, 'reply'), where('userEmail', '==', topUserEmail)))
 
             let addedUserData: Reply | null = null

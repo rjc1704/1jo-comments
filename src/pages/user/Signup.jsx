@@ -34,8 +34,10 @@ function Signup() {
     }
   }
 
-  const Signup = async (e) => {
-    e.preventDefault()
+  const signUp = async () => {
+    // TODO: 여기에 왜 e.preventDefault 가 있나요?
+    // TODO: 지금과 같은 로직이면 모든 input이 유효했을때만 회원가입 버튼이 활성화되어야 합니다.
+    // 브라우저 기본동작 막아줌. 레거시 코드를 반영.
     if (email.length === 0) {
       alert('이메일을 입력해주세요')
     } else if (password.length === 0 || confirmPassword.length === 0) {
@@ -170,7 +172,9 @@ function Signup() {
                 </SignInputAreaBox> */}
                 <SignInputAreaBox>
                   {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-                  <SignupBtn onClick={Signup}>가입하기</SignupBtn>
+                  <SignupBtn disabled={!validEmail} onClick={Signup}>
+                    가입하기
+                  </SignupBtn>
                 </SignInputAreaBox>
               </SignForm>
             </div>

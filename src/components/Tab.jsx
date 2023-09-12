@@ -14,7 +14,9 @@ const Tab = () => {
   const [currentTab, clickTab] = useState(0)
   const menuArr = [{ name: '나의 칭구들' }, { name: '내가 칭찬한 글' }]
 
-  const [localUser, setLocalUser] = useState(JSON.parse(localStorage.getItem('user')))
+  // TODO: 이건 왜 state 로 만드셨나요?
+  // const [localUser, setLocalUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const localUser = JSON.parse(localStorage.getItem('user');
 
   const { data: listsData, isLoading } = useQuery(['lists'], getLists)
   console.log('!1', listsData)

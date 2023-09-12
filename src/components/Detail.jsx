@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { styled } from 'styled-components'
 import { deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
-import { db, useAuth } from '../firebase'
+import { db, auth } from '../firebase'
 import { useParams, useNavigate } from 'react-router-dom'
 import Loading from '../components/Loading'
 import defaultProfileImage from '../img/user.png'
@@ -12,7 +12,8 @@ import likedImg from '../img/hand-clap.png'
 function Detail() {
   const [data, setData] = useState(null)
   const { id } = useParams()
-  const auth = useAuth()
+  // TODO: firebase.js 에서 export하고 있는 auth import해서 사용하시면 됩니다.
+  // const auth = useAuth()
   const navigate = useNavigate()
   const [isLiked, setIsLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -66,6 +67,7 @@ function Detail() {
           likes: newLikesCount,
           likedUser: updatedLikedUsers,
         })
+        // TODO: 좋아요 누를때마다 로딩컴포넌트 화면과 순간적으로 교차되는 것이 깜빡이는 현상으로 느껴집니다.
         fetchData() // 좋아요 수를 업데이트
         setIsLiked((prevIsLiked) => !prevIsLiked)
       } catch (error) {
@@ -79,6 +81,7 @@ function Detail() {
   const handleLikeButtonClick = async () => {
     await toggleLike()
   }
+  // TODO: useQuery로 충분히 리팩터링 가능해보입니다. isLoading, data와 같은 useState은 필요없게 됩니다.
   const fetchData = async () => {
     setIsLoading(true) // 데이터를 가져오는 동안 로딩 상태를 true로 설정
     try {
@@ -148,6 +151,7 @@ function Detail() {
   return (
     <>
       {isLoading ? ( // 로딩 중인 경우 로딩 콘텐츠를 렌더링
+        // TODO: 로딩 페이지를 대신 보여주기보다는 현재화면을 보여주되 로딩스피너만 돌게 만드는 게 더 좋을 것 같습니다.
         <Loading />
       ) : (
         data && (

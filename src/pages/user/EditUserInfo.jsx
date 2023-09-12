@@ -61,9 +61,11 @@ function EditUserInfo() {
     if (!file) {
       return // 파일을 선택하지 않았을 경우 아무 작업도 수행하지 않습니다.
     }
+    // TODO: 파일용량 제한에 대한 로직이 있으면 좋겠습니다.
 
     const storageRef = ref(storage, `profileImages/${user.uid}/${file.name}`)
     try {
+      // TODO: uploadBytes 로 하시는게 좋겠습니다. 중간 취소하는 UI가 없죠.
       const uploadTask = uploadBytesResumable(storageRef, file)
       uploadTask.on(
         'state_changed',

@@ -12,10 +12,11 @@ const MissionPage = () => {
   const user = auth.currentUser
   const { data: missionData, isLoading } = useQuery('missionContents', getMissionCards)
 
+  // TODO: 구조분해할당을 이용하는 게 좋겠습니다. const { data: myMissionCards, isLoading } = useQuery('missionContents', getMissionCards, { select: (data) => {return data.cards} })
   const myMissionCards = useQuery('myMissionCard', getMyMissionCard)
 
   const queryClient = useQueryClient()
-
+  // TODO: mutateAsync 보다는 mutate를 사용하는 게 좋겠습니다.
   const { mutateAsync } = useMutation(updateMissionCard, {
     onSuccess: () => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -23,6 +24,7 @@ const MissionPage = () => {
     },
   })
 
+  // TODO: 불필요한 코드는 전부 정리해야 합니다.
   useEffect(() => {}, [])
 
   const handleCardClick = async (cardId) => {
